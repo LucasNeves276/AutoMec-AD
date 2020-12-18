@@ -1,12 +1,11 @@
 # Based on https://docs.opencv.org/master/d6/d10/tutorial_py_houghlines.html
-# TODO fix hough1 and add hough2 (Probabilistic Hough Transform)
 
 import cv2 as cv
 import numpy as np
 import os
 
 
-def hough1(input_img, output_img):
+def hough1(input_img: str, output_img: str):
 
     # Getting the paths
     image_dir = os.path.realpath("../images")
@@ -15,7 +14,6 @@ def hough1(input_img, output_img):
 
     # Getting the image
     img = cv.imread(filename=input_img_path)
-    # img = cv.imread(cv.samples.findFile(input_img_path))
 
     # Processing
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -33,6 +31,17 @@ def hough1(input_img, output_img):
         y2 = int(y0 - 1000 * a)
         cv.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
     cv.imwrite(output_img_path, img)
+
+
+def hough2(input_img, output_img):
+    img = cv.imread(cv.samples.findFile('sudoku.png'))
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    edges = cv.Canny(gray, 50, 150, apertureSize=3)
+    lines = cv.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=100, maxLineGap=10)
+    for line in lines:
+        x1, y1, x2, y2 = line[0]
+        cv.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    cv.imwrite('houghlines5.jpg', img)
 
 
 if __name__ == '__main__':
