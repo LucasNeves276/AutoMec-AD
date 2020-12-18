@@ -1,0 +1,8 @@
+prefix=/home/nel/PycharmProjects/AutoMec-AD/ROS/devel
+
+Name: automec_ros
+Description: Description of automec_ros
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

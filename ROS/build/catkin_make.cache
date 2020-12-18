@@ -1,0 +1,2 @@
+automec_ros
+-DCATKIN_DEVEL_PREFIX=/home/nel/PycharmProjects/AutoMec-AD/ROS/devel -DCMAKE_INSTALL_PREFIX=/home/nel/PycharmProjects/AutoMec-AD/ROS/install -G Unix Makefiles
