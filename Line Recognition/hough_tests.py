@@ -5,18 +5,21 @@ import numpy as np
 import os
 
 
-def hough1(input_img: str, output_img: str):
+def hough1(input_img: str, output_img: str = ""):
     """
 
     :param input_img: input image name
-    :param output_img: output name
+    :param output_img: output name -> if ommited doesn't save
     :return: output_img
     """
 
     # Getting the paths
     images_dir = get_abs_path('../images', is_dir=True)
     image_path = get_abs_path(f"../images/{input_img}")
-    output_img_path = f"{images_dir}/{output_img}"
+    if output_img != "":
+        output_img_path = f"{images_dir}/{output_img}"
+    else:
+        output_img_path = ""
 
     # Getting the image
     img = cv.imread(filename=image_path)
@@ -36,7 +39,10 @@ def hough1(input_img: str, output_img: str):
         x2 = int(x0 - 1000 * (-b))
         y2 = int(y0 - 1000 * a)
         cv.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-    cv.imwrite(output_img_path, img)
+    if output_img_path != "":
+        cv.imwrite(output_img_path, img)
+    else:
+        show_image_temp(img=img)
 
 
 def hough2(input_img, output_img):
@@ -59,7 +65,11 @@ def hough2(input_img, output_img):
     for line in lines:
         x1, y1, x2, y2 = line[0]
         cv.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-    cv.imwrite(output_img_path, img)
+
+    if output_img_path != "":
+        cv.imwrite(output_img_path, img)
+    else:
+        show_image_temp(img=img)
 
 
 def show_image(img_path):
@@ -71,6 +81,15 @@ def show_image(img_path):
 
     img = cv.imread(filename=img_path)
 
+    show_image_temp(img=img)
+
+
+def show_image_temp(img):
+    """
+
+    :param img:
+    :return:
+    """
     # Create a visualization window
     # CV_WINDOW_AUTOSIZE : window size will depend on image size
     cv.namedWindow("Display window", cv.WINDOW_AUTOSIZE)
