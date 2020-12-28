@@ -45,7 +45,7 @@ def hough1(input_img: str, output_img: str = ""):
         show_image_temp(img=img)
 
 
-def hough2(input_img, output_img):
+def hough2(input_img, output_img: str = ""):
     """
 
     :param input_img:
@@ -56,7 +56,10 @@ def hough2(input_img, output_img):
     # Getting the paths
     images_dir = get_abs_path('../images', is_dir=True)
     image_path = get_abs_path(f"../images/{input_img}")
-    output_img_path = f"{images_dir}/{output_img}"
+    if output_img != "":
+        output_img_path = f"{images_dir}/{output_img}"
+    else:
+        output_img_path = ""
 
     img = cv.imread(cv.samples.findFile(image_path))
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -121,4 +124,5 @@ def get_abs_path(rel_path: str, is_dir: bool = False):
 
 
 if __name__ == '__main__':
-    hough2("imagem_teste.jpeg", "houghlines3_2.jpg")
+    hough2("img4.jpeg", "img4h.png")
+#   TODO: check if it's possible to make lines following the white ones
