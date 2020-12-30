@@ -1,4 +1,9 @@
 # Based on https://docs.opencv.org/master/d6/d10/tutorial_py_houghlines.html
+# TODO: check https://towardsdatascience.com/line-detection-make-an-autonomous-car-see-road-lines-e3ed984952c
+# TODO: check https://valueml.com/autonomous-lane-detection-for-self-driving-cars-in-python/
+# TODO: check https://medium.com/@yogeshojha/self-driving-cars-beginners-guide-to-computer-vision-finding-simple-lane-lines-using-python-a4977015e232
+# TODO: check https://data-flair.training/blogs/road-lane-line-detection/
+# TODO: check https://divyanshushekhar.com/lane-detection-opencv-python/
 
 import cv2 as cv
 import numpy as np
