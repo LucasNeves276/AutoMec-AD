@@ -1,13 +1,8 @@
 # Based on https://docs.opencv.org/master/d6/d10/tutorial_py_houghlines.html
-# TODO: check https://towardsdatascience.com/line-detection-make-an-autonomous-car-see-road-lines-e3ed984952c
-# TODO: check https://valueml.com/autonomous-lane-detection-for-self-driving-cars-in-python/
-# TODO: check https://medium.com/@yogeshojha/self-driving-cars-beginners-guide-to-computer-vision-finding-simple-lane-lines-using-python-a4977015e232
-# TODO: check https://data-flair.training/blogs/road-lane-line-detection/
-# TODO: check https://divyanshushekhar.com/lane-detection-opencv-python/
 
 import cv2 as cv
 import numpy as np
-import os
+from Lane_Recognition import utils
 
 
 def hough1(input_img: str, output_img: str = ""):
@@ -19,8 +14,8 @@ def hough1(input_img: str, output_img: str = ""):
     """
 
     # Getting the paths
-    images_dir = get_abs_path('../images', is_dir=True)
-    image_path = get_abs_path(f"../images/{input_img}")
+    images_dir = utils.get_abs_path('../images', is_dir=True)
+    image_path = utils.get_abs_path(f"../images/{input_img}")
     if output_img != "":
         output_img_path = f"{images_dir}/{output_img}"
     else:
@@ -47,7 +42,7 @@ def hough1(input_img: str, output_img: str = ""):
     if output_img_path != "":
         cv.imwrite(output_img_path, img)
     else:
-        show_image_temp(img=img)
+        utils.show_image_temp(img=img)
 
 
 def hough2(input_img, output_img: str = ""):
@@ -59,8 +54,8 @@ def hough2(input_img, output_img: str = ""):
     """
 
     # Getting the paths
-    images_dir = get_abs_path('../images', is_dir=True)
-    image_path = get_abs_path(f"../images/{input_img}")
+    images_dir = utils.get_abs_path('../images', is_dir=True)
+    image_path = utils.get_abs_path(f"../images/{input_img}")
     if output_img != "":
         output_img_path = f"{images_dir}/{output_img}"
     else:
@@ -77,55 +72,7 @@ def hough2(input_img, output_img: str = ""):
     if output_img_path != "":
         cv.imwrite(output_img_path, img)
     else:
-        show_image_temp(img=img)
-
-
-def show_image(img_path):
-    """
-
-    :param img_path: Image's absolute path: /.../image.png
-    :return: Window showing the requested image. Press any key to close it
-    """
-
-    img = cv.imread(filename=img_path)
-
-    show_image_temp(img=img)
-
-
-def show_image_temp(img):
-    """
-
-    :param img:
-    :return:
-    """
-    # Create a visualization window
-    # CV_WINDOW_AUTOSIZE : window size will depend on image size
-    cv.namedWindow("Display window", cv.WINDOW_AUTOSIZE)
-
-    # Show the image
-    cv.imshow("Display window", img)
-
-    # Wait
-    cv.waitKey(0)
-
-    # Destroy the window -- might be omitted
-    cv.destroyWindow("Display window")
-
-
-def get_abs_path(rel_path: str, is_dir: bool = False):
-    """
-
-    :param rel_path: relative path
-    :param is_dir:
-    :return:
-    """
-
-    path = os.path.realpath(rel_path)
-
-    assert os.path.exists(path), "File does not exist in specified path!"
-    assert not is_dir or os.path.isdir(path), "Expected directory, got file"
-
-    return path
+        utils.show_image_temp(img=img)
 
 
 if __name__ == '__main__':
