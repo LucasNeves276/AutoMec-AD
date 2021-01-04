@@ -125,7 +125,7 @@ def method2():
 def method3(img_path):
     """
     As in https://medium.com/@yogeshojha/self-driving-cars-beginners-guide-to-computer-vision-finding-simple-lane-lines-using-python-a4977015e232
-    Status: ...
+    Status: bug
     :return:
     """
     # Loading the image
