@@ -1,4 +1,3 @@
-# TODO: check https://medium.com/@yogeshojha/self-driving-cars-beginners-guide-to-computer-vision-finding-simple-lane-lines-using-python-a4977015e232
 # TODO: check https://data-flair.training/blogs/road-lane-line-detection/
 # TODO: check https://divyanshushekhar.com/lane-detection-opencv-python/
 
@@ -16,7 +15,8 @@ def draw_lines(line_img, lines):
 
 def method1(crop: bool = False):
     """
-    # As in https://towardsdatascience.com/line-detection-make-an-autonomous-car-see-road-lines-e3ed984952c
+    As in https://towardsdatascience.com/line-detection-make-an-autonomous-car-see-road-lines-e3ed984952c
+    Status: incoherent code, video code not sampled
     :return: Opens resulting image of method 1
     """
 
@@ -71,6 +71,7 @@ def method1(crop: bool = False):
 def method2():
     """
      from https://valueml.com/autonomous-lane-detection-for-self-driving-cars-in-python/
+     Status: bug, video code not sampled
     :return:
     """
     # Loading lane image
@@ -121,5 +122,49 @@ def method2():
     # plt.show()
 
 
+def method3(img_path):
+    """
+    As in https://medium.com/@yogeshojha/self-driving-cars-beginners-guide-to-computer-vision-finding-simple-lane-lines-using-python-a4977015e232
+    Status: ...
+    :return:
+    """
+    # Loading the image
+    lane_image = cv2.imread(utils.get_abs_path(img_path))
+
+    # Converting into grayscale
+    gray = cv2.cvtColor(lane_image, cv2.COLOR_RGB2GRAY)
+
+    # Reduce Noise and Smoothen Image
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+
+    # Edge detection (canny)
+    canny_image = cv2.Canny(blur, 50, 150)
+    # ...plt.imshow(canny_image)
+
+    # Masking region of interest
+    height = lane_image.shape[0]
+    triangle = np.array([[(200, height), (550, 250), (1100, height), ]], np.int32)
+    mask = np.zeros_like(lane_image)
+    cv2.fillPoly(mask, triangle, 255)
+    cropped_image = cv2.bitwise_and(canny_image, mask)
+
+    # Hough transform
+    rho = 2
+    theta = np.pi / 180
+    threshold = 100
+    lines = cv2.HoughLinesP(cropped_image, rho, theta, threshold, np.array([]), minLineLength=40, maxLineGap=5)
+
+    line_image = np.zeros_like(lane_image)
+    if lines is not None:
+        for line in lines:
+            x1, y1, x2, y2 = line.reshape(4)
+            cv2.line(line_image, (x1, y1), (x2, y2), (255, 0, 0), 10)
+    else:
+        raise AssertionError("lines == None")
+    # cv2.imshow('Lane Lines', line_image)
+    combo_image = cv2.addWeighted(lane_image, 0.8, line_image, 1, 1)
+    cv2.imshow("Image", combo_image)
+
+
 if __name__ == '__main__':
-    method2()
+    method3('../images/img4.jpeg')
